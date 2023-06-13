@@ -32,13 +32,15 @@ services:
     #privileged: true
     restart: unless-stopped
   node_exporter:
-    image: quay.io/prometheus/node-exporter:v1.5.0
+    image: quay.io/prometheus/node-exporter:latest
     container_name: node_exporter
-    command: "--path.rootfs=/host"
+    command:
+      - '--path.rootfs=/host'
+    network_mode: host
     pid: host
     restart: unless-stopped
     volumes:
-      - /:/host:ro,rslave
+      - '/:/host:ro,rslave'
   portainer-agent:
     container_name: portainer-agent
     deploy:
