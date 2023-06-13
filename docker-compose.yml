@@ -20,16 +20,16 @@ services:
     container_name: cadvisor
     ports:
       - 8080:8080
-    # network_mode: host
+    network_mode: host
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:ro
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
-    #devices:
-    #  - /dev/kmsg
-    #privileged: true
+    devices:
+      - /dev/kmsg
+    privileged: true
     restart: unless-stopped
   node_exporter:
     image: quay.io/prometheus/node-exporter:latest
