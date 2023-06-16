@@ -1,5 +1,6 @@
 global:
-  scrape_interval: 15s # By default, scrape targets every 15 seconds.
+  #scrape_interval: 15s # By default, scrape targets every 15 seconds.
+  scrape_interval: 5s
 
   # Attach these labels to any time series or alerts when communicating with
   # external systems (federation, remote storage, Alertmanager).
@@ -12,7 +13,6 @@ scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
   - job_name: "prometheus"
     # Override the global default and scrape targets from this job every 5 seconds.
-    scrape_interval: 5s
     static_configs:
       - targets: ["localhost:9090", 'host.docker.internal:9090'] # Docker Desktop for Mac
 
@@ -23,7 +23,6 @@ scrape_configs:
 
   # Example job for cadvisor
   - job_name: cadvisor
-    scrape_interval: 5s
     static_configs:
       - targets:
           - cadvisor:8080
