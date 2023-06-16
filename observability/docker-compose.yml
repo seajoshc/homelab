@@ -71,3 +71,12 @@ services:
       - prometheus-data:/prometheus
     command: "--config.file=/etc/prometheus/prometheus.yml"
     restart: unless-stopped
+  postgres-exporter:
+    image: quay.io/prometheuscommunity/postgres-exporter:latest
+    container_name: postgres-exporter
+    restart: unless-stopped
+    ports:
+      - 9187:9187
+    environment:
+    - DATA_SOURCE_NAME='postgresql://postgres:postgres@pg-sandbox:5432/?sslmode=disable'
+    
