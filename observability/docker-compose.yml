@@ -9,6 +9,7 @@ volumes:
 services:
   grafana:
     image: grafana/grafana-oss:latest
+    mem_limit: 512m
     container_name: grafana
     ports:
       - "3000:3000"
@@ -60,6 +61,7 @@ services:
     restart: unless-stopped
   prometheus:
     image: prom/prometheus:latest
+    mem_limit: 512m
     container_name: prometheus
     ports:
       - 9090:9090
