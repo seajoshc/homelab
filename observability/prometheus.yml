@@ -14,7 +14,7 @@ scrape_configs:
     # Override the global default and scrape targets from this job every 5 seconds.
     scrape_interval: 5s
     static_configs:
-      - targets: ["localhost:9090"]
+      - targets: ["localhost:9090", 'host.docker.internal:9090'] # Docker Desktop for Mac
 
   # Example job for node_exporter
   - job_name: "node_exporter"
@@ -27,3 +27,8 @@ scrape_configs:
     static_configs:
       - targets:
           - cadvisor:8080
+
+  # Docker daemon
+  - job_name: "docker"
+    static_configs:
+      - targets: ['host.docker.internal:9323']
