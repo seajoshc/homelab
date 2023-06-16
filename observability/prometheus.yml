@@ -14,7 +14,7 @@ scrape_configs:
   - job_name: "prometheus"
     # Override the global default and scrape targets from this job every 5 seconds.
     static_configs:
-      - targets: ["localhost:9090", 'host.docker.internal:9090'] # Docker Desktop for Mac
+      - targets: ["localhost:9090", "host.docker.internal:9090"] # Docker Desktop for Mac
 
   # Example job for node_exporter
   - job_name: "node_exporter"
@@ -30,4 +30,9 @@ scrape_configs:
   # Docker daemon
   - job_name: "docker"
     static_configs:
-      - targets: ['host.docker.internal:9323']
+      - targets: ["host.docker.internal:9323"]
+
+  # Postgres pg-sandbox
+  - job_name: "postgres_exporter"
+    static_configs:
+      - targets: [‘postgres-exporter:9187’]
