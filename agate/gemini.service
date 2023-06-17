@@ -1,0 +1,19 @@
+[Unit]
+Description=Agate gemini server
+After=network.target
+
+[Service]
+Type=simple
+User=gemini
+WorkingDirectory=/srv/gemini/
+ExecStart=/usr/local/bin/agate --addr 0.0.0.0:1965 --hostname rebukethe.net --lang en
+
+Restart=always
+RestartSec=1
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=gemini
+
+[Install]
+WantedBy=default.target

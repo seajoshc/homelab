@@ -1,0 +1,10 @@
+/var/log/gemini.log {
+	weekly
+	missingok
+	rotate 10
+	compress
+	delaycompress
+	notifempty
+	create 0640 gemini adm
+	sharedscripts
+}
