@@ -1,0 +1,81 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gxlb-ingress
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    #kubernetes.io/ingress.global-static-ip-name: gke-playground-ingress
+    kubernetes.io/ingress.class: "gce"
+    networking.gke.io/managed-certificates: managed-cert
+spec:
+  rules:
+  - host: app.rebukethe.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: echo-api
+            port:
+              number: 80
+  - host: cloud.rebukethe.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web
+            port:
+              number: 80
+      - path: /ui
+        pathType: Exact
+        backend:
+          service:
+            name: web
+            port:
+              number: 80
+      - path: /api
+        pathType: Exact
+        backend:
+          service:
+            name: api
+            port:
+              number: 80
+      - path: /payments
+        pathType: Exact
+        backend:
+          service:
+            name: payments
+            port:
+              number: 80
+      - path: /currency
+        pathType: Exact
+        backend:
+          service:
+            name: currency
+            port:
+              number: 80
+#  - host: home.rebukethe.net
+#    http:
+#      paths:
+#      - path: /
+#        pathType: Prefix
+#        backend:
+#          service:
+#            name: landing-page
+#            port:
+#              number: 80
+#  - host: backstage.rebukethe.net
+#    http:
+#      paths:
+#      - path: /
+#        pathType: Prefix
+#        backend:
+#          service:
+#            name: backstage
+#            port:
+#              number: 80
