@@ -1,0 +1,5 @@
+instance-type,region,per-month,date
+n2d-standard-4,iowa,$12.44,2021-12-23
+n2d-standard-4,iowa,$12.44,2021-12-30
+n2d-standard-2,iowa,$6.22,2022-07-17
+n2d-highmem-2,iowa,$8.39,2022-07-17
