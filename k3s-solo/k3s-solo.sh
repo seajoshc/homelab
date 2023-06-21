@@ -1,5 +1,7 @@
+apt install vim sudo curl
+
 echo "Configuring root's .bashrc 🔧"
-cat > /root/.bashrc<< EOF
+cat > /root/.bashrc <<EOF
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
 # Note: PS1 and umask are already set in /etc/profile. You should not
@@ -25,6 +27,7 @@ HISTFILESIZE=100000
 shopt -s histappend
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 EOF
+
 echo "root's .bashrc configured 🎉"
 
 echo "Configuring fail2ban 🔧"
