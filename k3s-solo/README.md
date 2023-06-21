@@ -31,6 +31,8 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 1. Disable password auth by changing `PasswordAuthentication: yes` to `no`. No other setting change is required. Verify with `ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no root@SERVER_IP`.
 
+1. Disable root login by changing /etc/ssh/sshd_config `PermitRootLogin: no`
+
 1. Install fail2ban
 
 ```
