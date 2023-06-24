@@ -7,6 +7,12 @@ volumes:
     driver: local
   prometheus-data:
     driver: local
+  postgres:
+    driver: local
+  pgadmin:
+    driver: local
+  nocodb:
+    driver: local
 services:
   grafana:
     image: grafana/grafana-oss:latest
@@ -79,4 +85,52 @@ services:
       - 9187:9187
     environment:
     - DATA_SOURCE_NAME='postgresql://postgres:postgres@pg-sandbox:5432/?sslmode=disable'
-    
+  postgres:
+    container_name: postgres
+    mem_limit: 512M
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=postgres-user
+      - POSTGRES_PASSWORD=IlikePizza69420
+    ports:
+      - '5432:5432'
+    volumes: 
+      - postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres-user", "-d", "IlikePizza69420"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+  pgadmin:
+    container_name: pgadmin4
+    depends_on:
+      postgres: 
+        condition: service_healthy
+    image: dpage/pgadmin4:latest
+    restart: unless-stopped
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=josh@p4a.net
+      - PGADMIN_DEFAULT_PASSWORD=beepboop69420
+      - PGADMIN_CONFIG_CHECK_EMAIL_DELIVERABILITY=False
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    healthcheck:
+      test: ["CMD", "wget", "-0", "-", "http://localhost:80/misc/ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+  nocodb: 
+    depends_on: 
+      postgres: 
+        condition: service_healthy
+    environment: 
+      NC_DB: "pg://postgres:5432?u=postgres-user&p=IlikePizza69420&db=postgres"
+    image: "nocodb/nocodb:latest"
+    ports: 
+      - "8888:8888"
+    restart: always
+    volumes: 
+      - "nocodb:/usr/app/data"
