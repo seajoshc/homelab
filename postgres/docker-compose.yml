@@ -24,7 +24,7 @@ services:
     image: dpage/pgadmin4:latest
     restart: unless-stopped
     environment:
-      - PGADMIN_DEFAULT_EMAIL=blah@example.org
+      - PGADMIN_DEFAULT_EMAIL=josh@p4a.net
       - PGADMIN_DEFAULT_PASSWORD=beepboop
       - PGADMIN_CONFIG_CHECK_EMAIL_DELIVERABILITY=False
     ports:
