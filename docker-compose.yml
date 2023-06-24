@@ -131,7 +131,7 @@ services:
       NC_DB: "pg://postgres:5432?u=postgres-user&p=IlikePizza69420&db=postgres"
     image: "nocodb/nocodb:latest"
     ports: 
-      - "9090:8080"
+      - "8888:8080"
     restart: always
     volumes: 
       - nocodb:/usr/app/data
