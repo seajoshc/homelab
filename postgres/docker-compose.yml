@@ -39,5 +39,5 @@ services:
 volumes:
   postgres:
     driver: local
-  pgadmin4:
+  pgadmin:
     driver: local
