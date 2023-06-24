@@ -91,6 +91,7 @@ services:
     image: postgres:latest
     restart: unless-stopped
     environment:
+      - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres-user
       - POSTGRES_PASSWORD=IlikePizza69420
     ports:
@@ -130,7 +131,7 @@ services:
       NC_DB: "pg://postgres:5432?u=postgres-user&p=IlikePizza69420&db=postgres"
     image: "nocodb/nocodb:latest"
     ports: 
-      - "8888:8888"
+      - "9090:8080"
     restart: always
     volumes: 
-      - "nocodb:/usr/app/data"
+      - nocodb:/usr/app/data
