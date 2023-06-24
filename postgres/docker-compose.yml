@@ -1,19 +1,24 @@
 ---
 services:
   postgres:
-    container_name: pg-sandbox
+    container_name: postgres
     mem_limit: 512M
     image: postgres:latest
     restart: unless-stopped
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres-user
+      - POSTGRES_PASSWORD=IlikePizza!
     ports:
       - '5432:5432'
     volumes: 
-      - pg-sandbox:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres-user", "-d", "IlikePizza!"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
   pgadmin:
-    container_name: pgadmin-sandbox
+    container_name: pgadmin4
     image: dpage/pgadmin4:latest
     restart: unless-stopped
     environment:
@@ -23,14 +28,14 @@ services:
     ports:
       - "5050:80"
     volumes:
-      - pgadmin-sandbox:/var/lib/pgadmin
+      - pgadmin:/var/lib/pgadmin
     healthcheck:
       test: ["CMD", "wget", "-0", "-", "http://localhost:80/misc/ping"]
       interval: 10s
       timeout: 10s
       retries: 5
 volumes:
-  pg-sandbox:
+  postgres:
     driver: local
-  pgadmin-sandbox:
+  pgadmin4:
     driver: local
