@@ -1,15 +1,44 @@
 # My homelab setup
 
-## Hetzner VPS
+## mephisto.p4a.net
 
-- Caddy
-- Portainer
-- Linkding
-- Random side projects
+Hetzner VPS that runs random things. Big fan of Hetzner Cloud, great prices and service!
 
-## GKE on the cheap
+### Packages installed
 
-Nearly free managed k8s one-node cluster with GKE on Google Cloud.
+- screen
+- caddy
+- `sudo apt install unattended-upgrades\nsudo systemctl enable unattended-upgrades\nsudo systemctl start unattended-upgrades`
+- lnav
+- glances
+- monitorix (`sudo service monitorix restart`)
+- `sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-compose`
+- yt-dlp
+- ffmpeg
+
+### Docker containers
+
+#### Portainer
+
+```shell
+sudo docker volume create portainer_data
+sudo docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
+```
+
+#### updating portainer
+
+```shell
+sudo docker pull portainer/portainer-ce:latest
+sudo docker restart portainer
+```
+
+#### updating linking
+
+```shell
+cd repos/mephisto-config/linkding
+docker-compose pull
+docker-compose up -d
+```
 
 ## Mac mini
 
@@ -33,3 +62,7 @@ Have a WIP Loki setup, never back around to finish this.
 Postgres: It's cheaper to host yourself and good to know how.
 
 Postgres + pgAdmin
+
+## GKE on the cheap
+
+Nearly free managed k8s one-node cluster with GKE on Google Cloud.
