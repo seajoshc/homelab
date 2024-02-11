@@ -1,0 +1,7 @@
+linkding.p4a.net linkding.rebukethe.net {
+	reverse_proxy localhost:9090
+}
+
+stuff.p4a.net stuff.rebukethe.net {
+    redir https://docs.google.com/spreadsheets/d/1gcVWAA13RrzpD1s4Mc1aGB2q1aobJHinR_LP7PVVoOU/edit?usp=sharing
+}
