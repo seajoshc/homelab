@@ -1,8 +1,8 @@
 # My homelab setup
 
-## mephisto.p4a.net
+## Hetzner VPS
 
-Hetzner VPS that runs random things. Big fan of Hetzner Cloud, great prices and service!
+Big fan of Hetzner Cloud!
 
 ### Packages installed
 
