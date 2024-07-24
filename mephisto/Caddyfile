@@ -5,3 +5,11 @@ linkding.p4a.net linkding.rebukethe.net {
 stuff.p4a.net stuff.rebukethe.net {
     redir https://docs.google.com/spreadsheets/d/1gcVWAA13RrzpD1s4Mc1aGB2q1aobJHinR_LP7PVVoOU/edit?usp=sharing
 }
+
+chat.p4a.net {
+    reverse_proxy localhost:3080
+}
+
+tesla.p4a.net {
+    reverse_proxy localhost:4000
+}
