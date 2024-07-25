@@ -9,7 +9,3 @@ stuff.p4a.net stuff.rebukethe.net {
 chat.p4a.net {
     reverse_proxy localhost:3080
 }
-
-tesla.p4a.net {
-    reverse_proxy localhost:4000
-}
