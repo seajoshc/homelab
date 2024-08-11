@@ -1,20 +1,19 @@
 stuff.p4a.net {
-    redir https://docs.google.com/spreadsheets/d/1gcVWAA13RrzpD1s4Mc1aGB2q1aobJHinR_LP7PVVoOU/edit?usp=sharing
+        redir https://docs.google.com/spreadsheets/d/1gcVWAA13RrzpD1s4Mc1aGB2q1aobJHinR_LP7PVVoOU/edit?usp=sharing
 }
 
 mtg.p4a.net {
-    redir https://gist.github.com/seajoshc/915a20e80ba20ed9edaee9a02df5c821
+        redir https://gist.github.com/seajoshc/915a20e80ba20ed9edaee9a02df5c821
 }
 
 chat.p4a.net {
-    reverse_proxy localhost:3080
-    header {
-        Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';"
-        X-Frame-Options "SAMEORIGIN"
-        X-Content-Type-Options "nosniff"
-        Referrer-Policy "strict-origin-when-cross-origin"
-        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-        Permissions-Policy "geolocation=(), midi=(), sync-xhr=(), microphone=(), camera=(), magnetometer=(), gyroscope=(), fullscreen=(self), payment=()"
-    }
+        reverse_proxy localhost:3080
+        header {
+                Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';"
+                X-Frame-Options "SAMEORIGIN"
+                X-Content-Type-Options "nosniff"
+                Referrer-Policy "strict-origin-when-cross-origin"
+                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+                Permissions-Policy "geolocation=(), midi=(), sync-xhr=(), microphone=(), camera=(), magnetometer=(), gyroscope=(), fullscreen=(self), payment=()"
+        }
 }
-
