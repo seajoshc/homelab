@@ -1,5 +1,9 @@
-stuff.p4a.net stuff.rebukethe.net {
+stuff.p4a.net {
     redir https://docs.google.com/spreadsheets/d/1gcVWAA13RrzpD1s4Mc1aGB2q1aobJHinR_LP7PVVoOU/edit?usp=sharing
+}
+
+mtg.p4a.net {
+    redir https://gist.github.com/seajoshc/915a20e80ba20ed9edaee9a02df5c821
 }
 
 chat.p4a.net {
@@ -14,8 +18,3 @@ chat.p4a.net {
     }
 }
 
-p4a.net {
-    handle /mtg {
-        redir https://gist.github.com/seajoshc/915a20e80ba20ed9edaee9a02df5c821
-    }
-}
