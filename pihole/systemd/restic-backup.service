@@ -1,0 +1,15 @@
+[Unit]
+Description=Restic backup service
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/backup-script.sh
+User=root
+Group=root
+
+# Set reasonable security options
+ProtectSystem=full
+ProtectHome=read-only
+PrivateTmp=true
+NoNewPrivileges=true
