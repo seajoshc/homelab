@@ -14,3 +14,44 @@ chat.p4a.net {
         Permissions-Policy "geolocation=(), midi=(), sync-xhr=(), microphone=(), camera=(), magnetometer=(), gyroscope=(), fullscreen=(self), payment=()"
     }
 }
+
+stats.p4a.net {
+    basicauth /* {
+        blah invault
+    }
+    handle / {
+        reverse_proxy localhost:8080 {
+            uri strip_prefix /
+            uri prefix /monitorix
+        }
+    }
+    handle /monitorix/* {
+        reverse_proxy localhost:8080
+    }
+}
+
+tesla.p4a.net {
+    basicauth /* {
+        blah invault
+    }
+
+    handle /teslamate/* {
+        reverse_proxy localhost:4000
+    }
+
+    handle /grafana/* {
+        reverse_proxy localhost:3000
+    }
+
+    handle /dashboards/* {
+        reverse_proxy localhost:3000
+    }
+
+    handle /d/* {
+        reverse_proxy localhost:3000
+    }
+
+    handle / {
+        reverse_proxy localhost:4000
+    }
+}
