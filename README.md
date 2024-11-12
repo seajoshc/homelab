@@ -16,6 +16,7 @@ Big fan of Hetzner Cloud!
 - yt-dlp
 - ffmpeg
 - restic
+- postgresql postgresql-client
 
 ### Docker containers
 
@@ -26,20 +27,25 @@ sudo docker volume create portainer_data
 sudo docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
 ```
 
-#### updating portainer
+updating portainer
 
 ```shell
 sudo docker pull portainer/portainer-ce:latest
 sudo docker restart portainer
 ```
-
-#### updating linking
+#### Linkding
+updating linking
 
 ```shell
 cd repos/mephisto-config/linkding
-docker-compose pull
-docker-compose up -d
+docker compose down
+docker compose pull
+docker compose up -d
 ```
+
+#### TeslaMate
+
+
 
 ## Mac mini
 
