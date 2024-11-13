@@ -4,3 +4,4 @@
 
 `3000` -> TeslaMate Grafana
 `4000` -> TeslaMate
+`8080` -> Monitorix
