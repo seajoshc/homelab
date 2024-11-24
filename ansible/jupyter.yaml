@@ -1,0 +1,145 @@
+---
+- name: Setup Jupyter Notebook Server
+  hosts: jupyter
+  become: yes
+  vars_files:
+    - vars.yml
+  vars:
+    jupyter_user: jupyter
+    jupyter_home: "/home/{{ jupyter_user }}"
+    venv_path: "{{ jupyter_home }}/jupyter_env"
+    jupyter_port: 8888
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install required packages
+      apt:
+        name:
+          - python3-pip
+          - python3-venv
+          - fail2ban
+        state: present
+
+    - name: Create jupyter user
+      user:
+        name: "{{ jupyter_user }}"
+        create_home: yes
+        shell: /bin/bash
+        state: present
+
+    - name: Create Python virtual environment
+      become_user: "{{ jupyter_user }}"
+      command: python3 -m venv {{ venv_path }}
+      args:
+        creates: "{{ venv_path }}"
+
+    - name: Install Jupyter in virtualenv
+      pip:
+        name:
+          - jupyter
+          - jupyterlab
+        virtualenv: "{{ venv_path }}"
+        state: present
+      become_user: "{{ jupyter_user }}"
+
+    - name: Create jupyter config directory
+      file:
+        path: "{{ jupyter_home }}/.jupyter"
+        state: directory
+        owner: "{{ jupyter_user }}"
+        group: "{{ jupyter_user }}"
+        mode: "0700"
+
+    - name: Generate Jupyter config file
+      become_user: "{{ jupyter_user }}"
+      command: "{{ venv_path }}/bin/jupyter server --generate-config"
+      args:
+        creates: "{{ jupyter_home }}/.jupyter/jupyter_server_config.py"
+
+    - name: Configure Jupyter server
+      copy:
+        dest: "{{ jupyter_home }}/.jupyter/jupyter_server_config.py"
+        owner: "{{ jupyter_user }}"
+        group: "{{ jupyter_user }}"
+        mode: "0600"
+        content: |
+          # Network security
+          c.ServerApp.ip = '127.0.0.1'
+          c.ServerApp.port = {{ jupyter_port }}
+          c.ServerApp.base_url = '/jupyter'
+          c.ServerApp.allow_remote_access = True
+
+          # Security settings
+          c.ServerApp.password_required = True
+          c.ServerApp.terminals_enabled = False
+          c.ServerApp.allow_root = False
+
+          # Resource limits
+          c.ServerApp.max_buffer_size = 536870912  # 512MB
+
+    - name: Create Jupyter systemd service
+      copy:
+        dest: /etc/systemd/system/jupyter.service
+        content: |
+          [Unit]
+          Description=Jupyter Notebook Server
+          After=network.target
+
+          [Service]
+          Type=simple
+          User={{ jupyter_user }}
+          Group={{ jupyter_user }}
+          Environment="PATH={{ venv_path }}/bin"
+          ExecStart={{ venv_path }}/bin/jupyter lab --config={{ jupyter_home }}/.jupyter/jupyter_server_config.py
+          WorkingDirectory={{ jupyter_home }}
+          Restart=always
+
+          # Basic security hardening
+          NoNewPrivileges=yes
+          PrivateTmp=yes
+          ProtectSystem=strict
+          ProtectHome=read-only
+          ReadWritePaths={{ jupyter_home }}
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Configure Caddy
+      copy:
+        dest: /etc/caddy/Caddyfile
+        content: |
+          {{ domain_name }} {
+              handle /jupyter* {
+                  reverse_proxy 127.0.0.1:{{ jupyter_port }}
+                  
+                  # Basic rate limiting
+                  rate_limit {
+                      events 100
+                      window 10s
+                  }
+              }
+          }
+
+    - name: Set Jupyter password
+      become_user: "{{ jupyter_user }}"
+      expect:
+        command: "{{ venv_path }}/bin/jupyter server password"
+        responses:
+          "Enter password:": "{{ jupyter_password }}"
+          "Verify password:": "{{ jupyter_password }}"
+      no_log: true
+
+    - name: Enable and start services
+      systemd:
+        name: "{{ item }}"
+        state: restarted
+        enabled: yes
+        daemon_reload: yes
+      loop:
+        - jupyter
+        - caddy
+        - fail2ban
