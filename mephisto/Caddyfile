@@ -9,7 +9,7 @@ mtg.p4a.net {
 chat.p4a.net {
     reverse_proxy localhost:3080
     header {
-        Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; frame-ancestors 'self' p4a.net; frame-src 'self' https://*.codesandbox.io"
+        Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.codesandbox.io; style-src 'self' 'unsafe-inline'; frame-ancestors 'self' p4a.net; frame-src 'self' https://*.codesandbox.io"
         
         X-Frame-Options "SAMEORIGIN"
         X-Content-Type-Options "nosniff"
@@ -58,4 +58,8 @@ tesla.p4a.net {
     handle / {
         reverse_proxy localhost:4000
     }
+}
+
+ip.p4a.net {
+    respond "{{.RemoteIP}}"
 }
