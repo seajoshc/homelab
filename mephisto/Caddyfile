@@ -61,5 +61,5 @@ tesla.p4a.net {
 }
 
 ip.p4a.net {
-    respond "{{.RemoteIP}}"
+    respond "{remote_host}"
 }
